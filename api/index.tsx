@@ -1,4 +1,4 @@
-const BASE_URL = "https://test-api.v-max.shop";
+const BASE_URL = "http://localhost:3000";
 
 export const fetchSummaryData = async (
   brand_id = 1

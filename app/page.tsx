@@ -7,9 +7,12 @@ export default function Home() {
   const router = useRouter();
   React.useEffect(() => {
     const item = localStorage.getItem("selectedTitle");
-    let url = "/dashboard"
-    if (item && item === "Orders"){
-      url = "/dashboard/orders"
+    console.log(item);
+    let url = "/dashboard";
+    if (item && item === "Orders") {
+      url = "/dashboard/orders";
+    } else if (item && item === "Youtube") {
+      url = "/dashboard/youtube";
     }
     const timeout = setTimeout(() => {
       router.push(url);

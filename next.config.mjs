@@ -38,7 +38,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*/",
-        destination: "https://test-api.v-max.shop/:path*/",
+        destination: "http://localhost:3000/:path*/",
       },
     ];
   },

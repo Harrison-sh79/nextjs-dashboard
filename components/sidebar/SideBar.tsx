@@ -20,7 +20,13 @@ import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
 import { useRouter } from "next/navigation";
-import { headerSlice, useSelector, useDispatch, openStatus, title } from "@/lib/redux";
+import {
+  headerSlice,
+  useSelector,
+  useDispatch,
+  openStatus,
+  title,
+} from "@/lib/redux";
 
 const drawerWidth: number = 240;
 
@@ -54,6 +60,10 @@ export default function SideBar() {
   const router = useRouter();
   const dispatch = useDispatch();
   const openstatus = useSelector(openStatus);
+  const handleYoutube = () => {
+    router.push("/dashboard/youtube");
+    dispatch(headerSlice.actions.changeTitle("Youtube"));
+  };
 
   return (
     <Drawer variant="permanent" open={openstatus} className="h-full">
@@ -89,7 +99,7 @@ export default function SideBar() {
         <ListItemButton
           onClick={() => {
             router.push("/dashboard");
-            dispatch(headerSlice.actions.changeTitle('Dashboard'));
+            dispatch(headerSlice.actions.changeTitle("Dashboard"));
           }}
         >
           <ListItemIcon>
@@ -100,7 +110,7 @@ export default function SideBar() {
         <ListItemButton
           onClick={() => {
             router.push("/dashboard/orders");
-            dispatch(headerSlice.actions.changeTitle('Orders'));
+            dispatch(headerSlice.actions.changeTitle("Orders"));
           }}
         >
           <ListItemIcon>
@@ -148,6 +158,18 @@ export default function SideBar() {
             <AssignmentIcon color="secondary" />
           </ListItemIcon>
           <ListItemText primary="Year-end sale" />
+        </ListItemButton>
+        <ListItemButton
+          onClick={handleYoutube}
+          // onClick={() => {
+          //   router.push("/dashboard/youtube");
+          //   dispatch(headerSlice.actions.changeTitle("Youtube"));
+          // }}
+        >
+          <ListItemIcon>
+            <AssignmentIcon color="secondary" />
+          </ListItemIcon>
+          <ListItemText primary="Youtube" />
         </ListItemButton>
       </List>
     </Drawer>
