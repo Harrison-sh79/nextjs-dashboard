@@ -19,7 +19,7 @@ async function getChannelInfo(
   }
 }
 
-export default async function callback(
+export default async function googleCallback(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
