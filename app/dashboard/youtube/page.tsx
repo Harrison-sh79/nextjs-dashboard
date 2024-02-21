@@ -35,45 +35,36 @@ function Youtube() {
   const router = useRouter();
   const [videoList, setVideoList] = useState<VideoItem[]>([]);
 
-  // const getChannel = (tokenInfo) => {
-  //   oauth2Client.setCredentials(tokenInfo);
-  //   const apikey = process.env.YOUTUBE_API_KEY;
-  //   var youtube = google.youtube({
-  //     version: "v3",
-  //     auth: apikey,
-  //   });
-  //   return youtube.channels.list({
-  //     auth: oauth2Client,
-  //     part: "snippet,statistics",
-  //     mine: true,
-  //   });
-  // };
-
-  const getVideosFromYouTubeAPI = async () => {
-    const apiUrl = "http://localhost:3000/api/videos";
-
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data: YouTubeApiResponse = await response.json();
-      setVideoList(data.items);
-    } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
-    }
+  const getVideosFromYouTubeAPI = () => {
+    fetch("/oauth/googleCallback")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then((data) => {
+        console.log(data);
+        setVideoList(data);
+      })
+      .catch((error) => console.error("Error fetching channel info:", error));
   };
 
-  useEffect(() => {
-    router.push("/api/auth");
-  }, []);
+  const handleAuthentication = () => {
+    router.push("/oauth");
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <Box>
       Youtube Channel
+      <Box>
+        <Button onClick={handleAuthentication}>Authenticate First</Button>
+      </Box>
+      <Box>
+        <Button onClick={getVideosFromYouTubeAPI}>Fetch Video List</Button>
+      </Box>
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {videoList.map((video, index) => (
           <React.Fragment key={video.id}>
